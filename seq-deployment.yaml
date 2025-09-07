@@ -1,0 +1,43 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seq
+  template:
+    metadata:
+      labels:
+        app: seq
+    spec:
+      containers:
+        - name: seq
+          image: datalust/seq:latest
+          ports:
+            - containerPort: 5341
+            - containerPort: 80
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SEQ_FIRSTRUN_ADMINPASSWORD   # 👈 add this
+              value: "Admin@123"                # ⚠️ choose a strong password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seq
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 31080
+    - name: ingestion
+      port: 5341
+      targetPort: 5341
+      nodePort: 31341
+  selector:
+    app: seq
