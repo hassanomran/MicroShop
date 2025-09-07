@@ -18,4 +18,24 @@ It demonstrates how to build, containerize, and deploy microservices to **Kubern
 ---
 
 ## 📂 Project Structure
-
+MicroShop/
+│
+├── OrderService/
+├── InventoryService/
+├── ApiGateway/
+│ ├── Program.cs
+│ ├── appsettings.json
+│ ├── ocelot.json
+│ └── Dockerfile
+│
+├── k8s/ # Kubernetes manifests
+│ ├── sqlserver-pvc.yaml
+│ ├── sqlserver-deployment.yaml
+│ ├── orderservice-deployment.yaml
+│ ├── inventoryservice-deployment.yaml
+│ ├── rabbitmq-deployment.yaml
+│ ├── apigateway-deployment.yaml
+│ ├── seq-deployment.yaml
+│ └── ingress.yaml (optional)
+│
+└── README.md
